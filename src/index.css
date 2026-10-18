@@ -17,10 +17,6 @@
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
-* {
-  border: 1px solid #000;
-}
-
 html {
   background-color: var(--color-bark);
   scroll-behavior: smooth;

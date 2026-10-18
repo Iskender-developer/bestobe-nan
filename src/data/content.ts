@@ -65,13 +65,6 @@ export const features: FeatureCard[] = [
     image: "",
     alt: "Loaves on a wooden board",
   },
-  {
-    id: "daily-oven",
-    title: "From the oven, daily",
-    text: "Baguettes, ciabatta and a rotating seasonal loaf, still warm at the door.",
-    image: "",
-    alt: "Bread fresh from the oven",
-  },
 ] as FeatureCard[];
 
 // TODO: replace with real content — breads section

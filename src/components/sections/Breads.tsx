@@ -15,7 +15,7 @@ export function Breads() {
   };
 
   return (
-    <section id="breads" className="py-20 md:py-28">
+    <section id="breads" className="py-10 md:py-28">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading label={breads.label} title={breads.heading} text={breads.text} />
