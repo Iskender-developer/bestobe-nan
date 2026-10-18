@@ -56,7 +56,6 @@ export function Contact() {
                 {status === "timeout" && <p className="text-amber">{contact.timeout}</p>}
               </div>
 
-              <p className="mt-6 max-w-md text-xs leading-relaxed text-mist">{contact.privacy}</p>
             </form>
           </GlassCard>
         </div>

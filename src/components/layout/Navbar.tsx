@@ -79,14 +79,14 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="glass rounded-3xl p-4 mt-4 mx-auto max-w-[1000px] px-4 sm:px-6 lg:px-8 md:hidden">
+        <div className="glass rounded-3xl p-4 mt-4 mx-auto max-w-[1000px] px-2 sm:px-6 lg:px-8 md:hidden">
           <Container className="flex flex-col gap-2">
             {navLinks.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="border-b border-crumb py-3 font-serif text-xl text-oat last:border-b-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
+                className="border-b border-crumb py-2 font-serif text-xl text-oat last:border-b-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber"
               >
                 {l.label}
               </a>

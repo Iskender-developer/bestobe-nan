@@ -20,7 +20,7 @@
 html {
   background-color: var(--color-bark);
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 40vh;
 }
 
 body {
