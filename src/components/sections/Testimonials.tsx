@@ -6,7 +6,7 @@ import { TestimonialCard } from "../ui/TestimonialCard";
 export function Testimonials() {
   const [featured, ...rest] = testimonials.items;
   return (
-    <section id="testimonials" className="py-20 md:py-28">
+    <section id="testimonials" className="min-h-dvh snap-start py-20 md:py-28">
       <Container>
         <SectionHeading title={testimonials.heading} text={testimonials.text} />
         <div className="mt-14 max-w-3xl">

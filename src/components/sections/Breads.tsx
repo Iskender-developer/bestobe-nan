@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { breads } from "../../data/content";
 import { BreadCard } from "../ui/BreadCard";
-import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 
@@ -37,12 +36,6 @@ export function Breads() {
           {breads.items.map((b) => (
             <BreadCard key={b.id} bread={b} />
           ))}
-        </div>
-
-        <div className="mt-10">
-          <Button variant="link" href="#contact">
-            {breads.viewAll}
-          </Button>
         </div>
       </Container>
     </section>

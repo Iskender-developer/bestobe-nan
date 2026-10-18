@@ -7,7 +7,7 @@ const icons: Record<string, string> = { Wheat: "🌾", Sunrise: "🌅", Leaf: "�
 
 export function WhyUs() {
   return (
-    <section id="why-us" className="py-20 md:py-28">
+    <section id="why-us" className="min-h-dvh snap-start py-20 md:py-28">
       <Container>
         <SectionHeading label={whyUs.label} title={whyUs.heading} text={whyUs.text} />
         <div className="mt-12 grid sm:grid-cols-2 md:grid-cols-4 gap-6">

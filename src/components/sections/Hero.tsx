@@ -1,4 +1,3 @@
-import { FloatingBadge } from "../ui/FloatingBadge";
 import { hero } from "../../data/content";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
@@ -7,7 +6,7 @@ import { ArchScene } from "../ui/ArchScene";
 
 export function Hero() {
   return (
-    <section className="overflow-hidden">
+    <section className="min-h-dvh snap-start overflow-hidden">
       <Container className="grid items-center gap-12 py-12 md:grid-cols-[1.15fr_1fr] md:py-24 lg:gap-24">
         <div className="glass rounded-3xl p-8 md:p-12">
           <SectionHeading
@@ -37,7 +36,6 @@ export function Hero() {
               <ArchScene alt={hero.alt} className="w-full max-w-md" />
             )}
           </div>
-          <FloatingBadge label={hero.badgeLabel} text={hero.badgeText} className="-bottom-6 -left-6 md:-bottom-8 md:-left-8 z-10" />
         </div>
       </Container>
     </section>
