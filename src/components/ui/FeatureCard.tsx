@@ -1,13 +1,20 @@
-import type { Feature } from "../../types";
+import type { FeatureCard } from "../../types";
+import { GlassCard } from "./GlassCard";
 
-type FeatureCardProps = { feature: Feature };
+type FeatureCardProps = { feature: FeatureCard };
 
 export function FeatureCard({ feature }: FeatureCardProps) {
   return (
-    <div className="bg-sand rounded-2xl p-6 shadow-sm">
-      <p className="text-xs uppercase tracking-widest text-twine">{feature.label}</p>
-      <h3 className="font-serif text-xl text-fawn mt-2">{feature.title}</h3>
-      <p className="mt-2 text-sm text-ink/80">{feature.text}</p>
-    </div>
+    <GlassCard className="flex flex-col">
+      <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-espresso/30 mb-4">
+        {feature.image ? (
+          <img src={feature.image} alt={feature.alt} loading="lazy" className="h-full w-full object-cover" />
+        ) : (
+          <div className="h-full w-full flex items-center justify-center text-mist text-4xl">🍞</div>
+        )}
+      </div>
+      <h3 className="font-serif text-2xl font-semibold text-oat">{feature.title}</h3>
+      <p className="mt-2 leading-relaxed text-mist">{feature.text}</p>
+    </GlassCard>
   );
 }

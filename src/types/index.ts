@@ -1,8 +1,26 @@
 // TODO: replace with real content
 export type NavLink = { label: string; href: string };
 
+export type Highlight = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  text: string;
+};
+
+export type FeatureCard = {
+  id: string;
+  title: string;
+  text: string;
+  image: string;
+  alt: string;
+};
+
+export type BreadShape = "round" | "oval" | "long" | "seeded" | "flat";
+
 export type Bread = {
   id: string;
+  shape: BreadShape;
   name: string;
   tag: string;
   price: number;

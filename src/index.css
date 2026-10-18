@@ -1,19 +1,48 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @theme {
-  --color-cream: #FFF8EE;
-  --color-sand: #F5E6D3;
-  --color-twine: #C08552;
-  --color-fawn: #8B5A2B;
-  --color-damask: #D26D3A;
-  --color-ink: #2B1D14;
+  --color-latte: #A56E48;
+  --color-roast: #6B3A1A;
+  --color-bark: #5C2F10;
+  --color-rust: #7A4128;
+  --color-espresso: #2B1608;
+  --color-amber: #E08A47;
+  --color-caramel: #B8591C;
+  --color-wine: #5A2A1A;
+  --color-olive-brown: #3A2A0E;
+  --color-oat: #EADCC8;
+  --color-mist: #BBA58F;
 
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-serif: "Fraunces", "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+html {
+  background-color: var(--color-bark);
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
+  min-height: 100vh;
+  color: var(--color-oat);
   font-family: var(--font-sans);
-  background-color: var(--color-cream);
-  color: var(--color-ink);
+  background:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(160deg, #A56E48 0%, #6B3A1A 35%, #5C2F10 70%, #7A4128 100%);
+  background-attachment: fixed;
+}
+
+@utility glass {
+  background-color: rgba(60, 35, 15, 0.55);
+  border: 1px solid rgba(200, 150, 100, 0.25);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(20, 8, 0, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

@@ -1,18 +1,29 @@
+import { Star } from "lucide-react";
 import type { Testimonial } from "../../types";
 
-type TestimonialCardProps = { testimonial: Testimonial };
+type TestimonialCardProps = {
+  testimonial: Testimonial;
+  ratingLabel: string;
+  featured?: boolean;
+};
 
-export function TestimonialCard({ testimonial }: TestimonialCardProps) {
+export function TestimonialCard({ testimonial, ratingLabel, featured = false }: TestimonialCardProps) {
   return (
-    <div className="bg-cream rounded-2xl p-6 shadow-md">
-      <div className="flex gap-1 text-twine mb-3">
-        {Array.from({ length: testimonial.rating }).map((_, i) => (
-          <span key={i}>★</span>
+    <figure className={featured ? "glass rounded-3xl p-6" : ""}>
+      <div className="flex gap-1 text-amber" role="img" aria-label={`${testimonial.rating} ${ratingLabel}`}>
+        {Array.from({ length: testimonial.rating }, (_, i) => (
+          <Star key={`${testimonial.id}-star-${i}`} size={featured ? 22 : 18} className="fill-amber" aria-hidden="true" />
         ))}
       </div>
-      <p className="text-ink italic">"{testimonial.quote}"</p>
-      <p className="mt-4 font-serif text-fawn">{testimonial.name}</p>
-      <p className="text-sm text-ink/70">{testimonial.role}</p>
-    </div>
+      <blockquote
+        className={`mt-5 font-serif italic text-oat ${featured ? "text-3xl leading-snug md:text-4xl" : "text-xl leading-relaxed"}`}
+      >
+        “{testimonial.quote}”
+      </blockquote>
+      <figcaption className="mt-5 text-mist/80">
+        <span className="font-medium text-oat">{testimonial.name}</span>
+        <span className="block text-sm">{testimonial.role}</span>
+      </figcaption>
+    </figure>
   );
 }

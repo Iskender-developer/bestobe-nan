@@ -1,16 +1,23 @@
 import { testimonials } from "../../data/content";
+import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { TestimonialCard } from "../ui/TestimonialCard";
 
 export function Testimonials() {
+  const [featured, ...rest] = testimonials.items;
   return (
-    <section className="bg-sand py-16">
-      <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="testimonials" className="py-20 md:py-28">
+      <Container>
         <SectionHeading title={testimonials.heading} text={testimonials.text} />
-        <div className="mt-8 grid md:grid-cols-3 gap-4">
-          {testimonials.items.map((t) => <TestimonialCard key={t.id} testimonial={t} />)}
+        <div className="mt-14 max-w-3xl">
+          <TestimonialCard testimonial={featured} ratingLabel={testimonials.ratingLabel} featured />
         </div>
-      </div>
+        <div className="mt-14 grid gap-10 border-t border-crumb/40 pt-12 md:grid-cols-2 md:gap-16">
+          {rest.map((t) => (
+            <TestimonialCard key={t.id} testimonial={t} ratingLabel={testimonials.ratingLabel} />
+          ))}
+        </div>
+      </Container>
     </section>
   );
 }

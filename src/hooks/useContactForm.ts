@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ContactFormValues } from "../types";
 
-type Status = "idle" | "sending" | "success" | "error";
+type Status = "idle" | "sending" | "success" | "error" | "timeout";
 
 const initial: ContactFormValues = {
   firstName: "",
@@ -19,6 +19,33 @@ export function useContactForm() {
   const COOLDOWN_MS = 60_000; // 1 minute between submissions
   const lastSubmitRef = useRef<number>(0);
   const [rateLimited, setRateLimited] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mountedRef = useRef(true);
+  const TIMEOUT_MS = 20_000; // 20 seconds
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      if (abortControllerRef.current !== null) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+    };
+  }, []);
+
+  function clearPendingRequest() {
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    abortControllerRef.current = null;
+  }
 
   function validate(v: ContactFormValues) {
     const e: Partial<Record<keyof ContactFormValues, string>> = {};
@@ -41,10 +68,7 @@ export function useContactForm() {
     setErrors(e2);
     if (Object.keys(e2).length) return;
     if (hp) {
-      if (import.meta.env.DEV) {
-        // Honeypot filled: likely a bot. Silently block in production.
-        console.log("[honeypot] blocked spam attempt");
-      }
+      // Honeypot filled: likely a bot. Silently block.
       return;
     }
 
@@ -55,6 +79,16 @@ export function useContactForm() {
       return;
     }
     lastSubmitRef.current = now;
+    clearPendingRequest();
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, TIMEOUT_MS);
+    timeoutRef.current = timeoutId;
+
     setStatus("sending");
     try {
       const endpoint = import.meta.env.VITE_FORM_ENDPOINT as string;
@@ -62,12 +96,21 @@ export function useContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(values),
+        signal: controller.signal,
       });
+      clearPendingRequest();
+      if (!mountedRef.current) return;
       if (!res.ok) throw new Error("fail");
       setStatus("success");
       setValues(initial);
-    } catch {
-      setStatus("error");
+    } catch (err) {
+      if (!mountedRef.current) return;
+      clearPendingRequest();
+      if (err instanceof DOMException && err.name === "AbortError") {
+        setStatus("timeout");
+      } else {
+        setStatus("error");
+      }
     }
   }
 

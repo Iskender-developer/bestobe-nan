@@ -1,126 +1,79 @@
-import { useId } from "react";
 import { contact } from "../../data/content";
-import { SectionHeading } from "../ui/SectionHeading";
 import { useContactForm } from "../../hooks/useContactForm";
+import { ArchScene } from "../ui/ArchScene";
+import { Button } from "../ui/Button";
+import { Container } from "../ui/Container";
+import { GlassCard } from "../ui/GlassCard";
+import { Input } from "../ui/Input";
+import { SectionHeading } from "../ui/SectionHeading";
+import { Textarea } from "../ui/Textarea";
 
 export function Contact() {
   const { values, errors, status, hp, rateLimited, setHp, handleChange, handleSubmit } = useContactForm();
 
-  const firstNameId = useId();
-  const lastNameId = useId();
-  const emailId = useId();
-  const messageId = useId();
-  const acceptTermsId = useId();
-
   return (
-    <section id="contact" className="py-16">
-      <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
+    <section id="contact" className="py-20 md:py-28">
+      <Container className="grid items-start gap-14 md:grid-cols-[1.2fr_1fr] md:gap-20">
         <div>
           <SectionHeading label={contact.label} title={contact.heading} text={contact.text} />
-          <form className="mt-6 space-y-3" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor={firstNameId} className="block text-sm font-medium text-ink mb-1">
-                First name
+          <GlassCard className="mt-10 p-8 md:p-10">
+            <form className="mt-0" onSubmit={handleSubmit} noValidate>
+              <div className="grid gap-x-5 sm:grid-cols-2">
+                <Input label={contact.fields.firstName} autoComplete="given-name" value={values.firstName} error={errors.firstName} onChange={(v) => handleChange("firstName", v)} />
+                <Input label={contact.fields.lastName} autoComplete="family-name" value={values.lastName} error={errors.lastName} onChange={(v) => handleChange("lastName", v)} />
+              </div>
+              <Input label={contact.fields.email} type="email" autoComplete="email" value={values.email} error={errors.email} onChange={(v) => handleChange("email", v)} />
+              <Textarea label={contact.fields.message} value={values.message} error={errors.message} onChange={(v) => handleChange("message", v)} />
+
+              {/* Honeypot: hidden from people, bots tend to fill it in. */}
+              <div className="hidden" aria-hidden="true">
+                <input type="text" value={hp} onChange={(e) => setHp(e.target.value)} tabIndex={-1} autoComplete="off" />
+              </div>
+
+              <label className="mt-6 flex items-center gap-3 text-sm text-oat">
+                <input
+                  type="checkbox"
+                  checked={values.acceptTerms}
+                  onChange={(e) => handleChange("acceptTerms", e.target.checked)}
+                  className="h-5 w-5 rounded accent-amber"
+                />
+                {contact.fields.terms}
               </label>
-              <input
-                id={firstNameId}
-                type="text"
-                value={values.firstName}
-                onChange={(e) => handleChange("firstName", e.target.value)}
-                className="w-full p-3 rounded-xl border border-twine bg-cream"
-                placeholder="First name"
-                aria-describedby={errors.firstName ? `${firstNameId}-error` : undefined}
-              />
-              {errors.firstName && (
-                <p id={`${firstNameId}-error`} className="text-damask text-sm mt-1" aria-live="polite">
-                  {errors.firstName}
-                </p>
-              )}
-            </div>
-            <div>
-              <label htmlFor={lastNameId} className="block text-sm font-medium text-ink mb-1">
-                Last name
-              </label>
-              <input
-                id={lastNameId}
-                type="text"
-                value={values.lastName}
-                onChange={(e) => handleChange("lastName", e.target.value)}
-                className="w-full p-3 rounded-xl border border-twine bg-cream"
-                placeholder="Last name"
-                aria-describedby={errors.lastName ? `${lastNameId}-error` : undefined}
-              />
-              {errors.lastName && (
-                <p id={`${lastNameId}-error`} className="text-damask text-sm mt-1" aria-live="polite">
-                  {errors.lastName}
-                </p>
-              )}
-            </div>
-            <div>
-              <label htmlFor={emailId} className="block text-sm font-medium text-ink mb-1">
-                Email
-              </label>
-              <input
-                id={emailId}
-                type="email"
-                value={values.email}
-                onChange={(e) => handleChange("email", e.target.value)}
-                className="w-full p-3 rounded-xl border border-twine bg-cream"
-                placeholder="Email"
-                aria-describedby={errors.email ? `${emailId}-error` : undefined}
-              />
-              {errors.email && (
-                <p id={`${emailId}-error`} className="text-damask text-sm mt-1" aria-live="polite">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-            <div>
-              <label htmlFor={messageId} className="block text-sm font-medium text-ink mb-1">
-                Message
-              </label>
-              <textarea
-                id={messageId}
-                value={values.message}
-                onChange={(e) => handleChange("message", e.target.value)}
-                className="w-full p-3 rounded-xl border border-twine bg-cream"
-                placeholder="Message"
-                rows={4}
-                aria-describedby={errors.message ? `${messageId}-error` : undefined}
-              />
-              {errors.message && (
-                <p id={`${messageId}-error`} className="text-damask text-sm mt-1" aria-live="polite">
-                  {errors.message}
-                </p>
-              )}
-            </div>
-            <input type="text" value={hp} onChange={(e) => setHp(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
-            <label className="flex items-center gap-2 text-sm">
-              <input id={acceptTermsId} type="checkbox" checked={values.acceptTerms} onChange={(e) => handleChange("acceptTerms", e.target.checked)} />
-              Accept the terms
-            </label>
-            {errors.acceptTerms && <p className="text-damask text-sm" aria-live="polite">{errors.acceptTerms}</p>}
-            {rateLimited && (
-              <p className="text-damask text-sm">You've submitted recently. Please wait before sending again.</p>
-            )}
-            <button disabled={status === "sending" || rateLimited} className="bg-fawn text-cream px-6 py-3 rounded-full disabled:opacity-50">
-              {status === "sending" ? "Sending..." : contact.submit}
-            </button>
-            {status === "success" && <p className="text-fawn text-sm">{contact.success}</p>}
-            {status === "error" && <p className="text-damask text-sm">{contact.error}</p>}
-            <p className="mt-3 text-xs text-ink/60">
-              Your message is sent directly to us via Formspree. We only use your details to reply.
-            </p>
-          </form>
+              <p aria-live="polite" className="mt-1 min-h-5 text-sm text-damask">
+                {errors.acceptTerms}
+              </p>
+
+              <div className="mt-6">
+                <Button type="submit" disabled={status === "sending" || rateLimited}>
+                  {status === "sending" ? contact.sending : contact.submit}
+                </Button>
+              </div>
+
+              <div aria-live="polite" className="mt-4 text-sm">
+                {rateLimited && <p className="text-damask">{contact.rateLimited}</p>}
+                {status === "success" && <p className="rounded-xl bg-amber/10 p-4 text-amber">{contact.success}</p>}
+                {status === "error" && <p className="text-damask">{contact.error}</p>}
+                {status === "timeout" && <p className="text-amber">{contact.timeout}</p>}
+              </div>
+
+              <p className="mt-6 max-w-md text-xs leading-relaxed text-mist">{contact.privacy}</p>
+            </form>
+          </GlassCard>
         </div>
-         <div className="aspect-[4/3] md:aspect-auto md:h-full bg-sand rounded-2xl overflow-hidden flex items-center justify-center">
+
+        <div className="relative">
           {contact.image ? (
-            <img src={contact.image} alt={contact.alt} className="w-full h-full object-cover" />
+            <img
+              src={contact.image}
+              alt={contact.alt}
+              loading="lazy"
+              className="mx-auto aspect-[4/5] w-full max-w-md rounded-2xl object-cover md:sticky md:top-28"
+            />
           ) : (
-            <span className="text-twine text-6xl">🏠</span>
+            <ArchScene alt={contact.alt} className="mx-auto aspect-[4/5] w-full max-w-md md:sticky md:top-28" />
           )}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
