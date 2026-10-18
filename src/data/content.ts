@@ -1,13 +1,13 @@
 // TODO: replace with real content
 import type { Bread, Feature, NavLink, Testimonial } from "../types";
 
+// TODO: replace with real content — navigation links
 export const navLinks: NavLink[] = [
-  { label: "About", href: "#about" },
   { label: "Breads", href: "#breads" },
   { label: "Why us", href: "#why-us" },
-  { label: "Visit", href: "#visit" },
 ];
 
+// TODO: replace with real content — hero section
 export const hero = {
   headline: "Bread baked before the sun wakes up",
   text: "Warm loaves, slow fermentation, simple ingredients. The smell alone will pull you in.",
@@ -17,6 +17,7 @@ export const hero = {
   alt: "Fresh loaves cooling on a rack",
 };
 
+// TODO: replace with real content — breads section
 export const breads = {
   label: "Fresh",
   heading: "Breads",
@@ -31,6 +32,7 @@ export const breads = {
   ] as Bread[],
 };
 
+// TODO: replace with real content — why us section
 export const whyUs = {
   label: "Why us",
   heading: "Bread the way it should be",
@@ -43,6 +45,7 @@ export const whyUs = {
   ] as Feature[],
 };
 
+// TODO: replace with real content — testimonials section
 export const testimonials = {
   heading: "Kind words",
   text: "The neighborhood talks about us.",
@@ -53,6 +56,7 @@ export const testimonials = {
   ] as Testimonial[],
 };
 
+// TODO: replace with real content — contact form
 export const contact = {
   label: "Order",
   heading: "Contact us",
@@ -64,6 +68,7 @@ export const contact = {
   error: "Something went wrong. Please try again or call us.",
 };
 
+// TODO: replace with real content — footer
 export const footer = {
   brand: "The Neighborhood Loaf",
   address: "Level 1, 12 Sample St, Sydney NSW 2000",

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { ContactFormValues } from "../types";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -16,6 +16,9 @@ export function useContactForm() {
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormValues, string>>>({});
   const [status, setStatus] = useState<Status>("idle");
   const [hp, setHp] = useState("");
+  const COOLDOWN_MS = 60_000; // 1 minute between submissions
+  const lastSubmitRef = useRef<number>(0);
+  const [rateLimited, setRateLimited] = useState(false);
 
   function validate(v: ContactFormValues) {
     const e: Partial<Record<keyof ContactFormValues, string>> = {};
@@ -37,7 +40,21 @@ export function useContactForm() {
     const e2 = validate(values);
     setErrors(e2);
     if (Object.keys(e2).length) return;
-    if (hp) return;
+    if (hp) {
+      if (import.meta.env.DEV) {
+        // Honeypot filled: likely a bot. Silently block in production.
+        console.log("[honeypot] blocked spam attempt");
+      }
+      return;
+    }
+
+    const now = Date.now();
+    if (now - lastSubmitRef.current < COOLDOWN_MS) {
+      setRateLimited(true);
+      setTimeout(() => setRateLimited(false), COOLDOWN_MS - (now - lastSubmitRef.current));
+      return;
+    }
+    lastSubmitRef.current = now;
     setStatus("sending");
     try {
       const endpoint = import.meta.env.VITE_FORM_ENDPOINT as string;
@@ -54,5 +71,5 @@ export function useContactForm() {
     }
   }
 
-  return { values, errors, status, hp, setHp, handleChange, handleSubmit };
+  return { values, errors, status, hp, rateLimited, setHp, handleChange, handleSubmit };
 }

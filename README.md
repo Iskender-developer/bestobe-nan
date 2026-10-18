@@ -1,36 +1,54 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# The Neighborhood Loaf
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A cozy, one-page bakery website built with React, TypeScript, Vite, and Tailwind CSS. The main conversion is the contact/order form, which submits to Formspree.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + TypeScript (strict)
+- Vite
+- Tailwind CSS v4
+- lucide-react
+- Formspree (contact form, no backend)
 
-## React Compiler
+## Project structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```
+src/
+  main.tsx
+  App.tsx
+  index.css           (Tailwind import and theme tokens)
+  data/
+    content.ts        (ALL copy lives here)
+  types/
+    index.ts          (shared types)
+  components/
+    layout/           Navbar, Footer
+    sections/         Hero, Breads, WhyUs, Testimonials, Contact, About, Visit
+    ui/               Button, SectionHeading, BreadCard, FeatureCard, TestimonialCard
+  hooks/
+    useContactForm.ts
+  assets/
+    images/
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
-=======
-# bestobe-nan
->>>>>>> b357ff013cb31a5b1552792ff617841d79464911
+## Getting started
+
+```bash
+npm install
+npm run dev        # start dev server
+npm run build      # typecheck + production build
+npm run lint       # oxlint
+npm run preview    # preview production build
+```
+
+## Content
+
+All placeholder copy lives in `src/data/content.ts` and is marked with `// TODO: replace with real content`. Do not hard-code text in components.
+
+## Rules
+
+See `rules.md` for stack, TypeScript, React, Tailwind, accessibility, performance, and SEO rules. See `plan.md` for the build plan and definition of done.
+
+## License
+
+Private project.
