@@ -1,4 +1,7 @@
+import { useContactForm } from "./hooks/useContactForm";
+
 export default function App() {
+  const { values, errors, status, hp, setHp, handleChange, handleSubmit } = useContactForm();
   return (
     <div className="min-h-screen bg-cream text-ink">
       <header className="sticky top-0 bg-cream/90 backdrop-blur border-b border-sand">
@@ -47,12 +50,26 @@ export default function App() {
         <section id="contact" className="bg-sand py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-serif text-3xl text-fawn">Contact us</h2>
-            <form className="mt-6 max-w-md space-y-3">
-              <input className="w-full p-2 rounded border border-twine" placeholder="First name" />
-              <input className="w-full p-2 rounded border border-twine" placeholder="Last name" />
-              <input className="w-full p-2 rounded border border-twine" placeholder="Email" />
-              <textarea className="w-full p-2 rounded border border-twine" placeholder="Message" />
-              <button className="bg-fawn text-cream px-6 py-3 rounded-full">Send</button>
+            <form className="mt-6 max-w-md space-y-3" onSubmit={handleSubmit}>
+              <input type="text" name="firstName" value={values.firstName} onChange={(e) => handleChange("firstName", e.target.value)} className="w-full p-2 rounded border border-twine" placeholder="First name" />
+              {errors.firstName && <p className="text-damask text-sm">{errors.firstName}</p>}
+              <input type="text" name="lastName" value={values.lastName} onChange={(e) => handleChange("lastName", e.target.value)} className="w-full p-2 rounded border border-twine" placeholder="Last name" />
+              {errors.lastName && <p className="text-damask text-sm">{errors.lastName}</p>}
+              <input type="email" name="email" value={values.email} onChange={(e) => handleChange("email", e.target.value)} className="w-full p-2 rounded border border-twine" placeholder="Email" />
+              {errors.email && <p className="text-damask text-sm">{errors.email}</p>}
+              <textarea name="message" value={values.message} onChange={(e) => handleChange("message", e.target.value)} className="w-full p-2 rounded border border-twine" placeholder="Message" />
+              {errors.message && <p className="text-damask text-sm">{errors.message}</p>}
+              <input type="text" name="_gotcha" value={hp} onChange={(e) => setHp(e.target.value)} className="hidden" tabIndex={-1} autoComplete="off" />
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={values.acceptTerms} onChange={(e) => handleChange("acceptTerms", e.target.checked)} />
+                Accept the terms
+              </label>
+              {errors.acceptTerms && <p className="text-damask text-sm">{errors.acceptTerms}</p>}
+              <button disabled={status === "sending"} className="bg-fawn text-cream px-6 py-3 rounded-full disabled:opacity-50">
+                {status === "sending" ? "Sending..." : "Send"}
+              </button>
+              {status === "success" && <p className="text-fawn text-sm">Thank you! We got your message and will reply soon.</p>}
+              {status === "error" && <p className="text-damask text-sm">Something went wrong. Please try again or call us.</p>}
             </form>
           </div>
         </section>
