@@ -17,6 +17,10 @@
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
+/* * {
+  border: 1px solid #000;
+} */
+
 html {
   background-color: var(--color-bark);
   scroll-behavior: smooth;
@@ -28,8 +32,8 @@ body {
   color: var(--color-oat);
   font-family: var(--font-sans);
   background:
-    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 70px 70px,
-    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 70px 70px,
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 80px 80px,
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 80px 80px,
     linear-gradient(160deg, #A56E48 0%, #6B3A1A 35%, #5C2F10 70%, #7A4128 100%);
   background-attachment: fixed;
 }

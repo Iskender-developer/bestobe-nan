@@ -20,7 +20,7 @@ export function Button({
   type = "button",
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center rounded-full px-7 py-3 text-sm font-medium transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber motion-reduce:transition-none";
+    "inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber motion-reduce:transition-none";
   const styles: Record<string, string> = {
     primary: "bg-wine text-oat hover:bg-amber hover:text-espresso",
     secondary: "bg-olive-brown text-oat hover:bg-amber hover:text-espresso",

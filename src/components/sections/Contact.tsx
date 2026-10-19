@@ -69,20 +69,20 @@ export function Contact() {
                   />
                 </div>
 
-                <label className="mt-6 flex items-center gap-3 text-sm text-oat">
+                <label className="mt-1 flex items-center gap-3 text-sm text-oat">
                   <input
                     type="checkbox"
                     checked={values.acceptTerms}
                     onChange={(e) =>
                       handleChange("acceptTerms", e.target.checked)
                     }
-                    className="h-5 w-5 rounded accent-amber"
+                    className="h-3 w-3 rounded accent-amber "
                   />
                   {contact.fields.terms}
                 </label>
                 <p
                   aria-live="polite"
-                  className="mt-1 min-h-5 text-sm text-damask"
+                  className="mt-1 min-h-1 text-sm text-damask"
                 >
                   {errors.acceptTerms}
                 </p>

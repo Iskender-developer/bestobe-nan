@@ -23,7 +23,7 @@ export function Textarea({ label, value, error, rows = 4, onChange }: TextareaPr
         onChange={(e) => onChange(e.target.value)}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId : undefined}
-        className="w-full rounded-xl border-2 border-crumb bg-espresso/40 px-4 py-3 text-oat transition duration-200 focus-visible:border-amber focus-visible:outline-none aria-invalid:border-damask placeholder:text-mist/70"
+        className="w-full max-h-20 rounded-xl border-2 border-crumb bg-espresso/30 px-3 py-3 text-oat transition duration-200 focus-visible:border-amber focus-visible:outline-none aria-invalid:border-damask placeholder:text-mist/70"
       />
       <p id={errorId} aria-live="polite" className="mt-1 min-h-5 text-sm text-damask">
         {error}
